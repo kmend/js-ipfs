@@ -50,7 +50,7 @@ describe('name', function () {
       this.timeout(50 * 1000)
       df.spawn({
         exec: IPFS,
-        args: [`--pass ${hat()}`],
+        args: [`--pass ${hat()}`, '--local'],
         config: { Bootstrap: [] }
       }, (err, _ipfsd) => {
         expect(err).to.not.exist()
@@ -152,7 +152,7 @@ describe('name', function () {
       this.timeout(40 * 1000)
       df.spawn({
         exec: IPFS,
-        args: [`--pass ${hat()}`],
+        args: [`--pass ${hat()}`, '--local'],
         config: { Bootstrap: [] }
       }, (err, _ipfsd) => {
         expect(err).to.not.exist()
@@ -203,8 +203,18 @@ describe('name', function () {
     const createNode = (callback) => {
       df.spawn({
         exec: IPFS,
-        args: [`--pass ${hat()}`, '--enable-dht-experiment'],
-        config: { Bootstrap: [] }
+        args: [`--pass ${hat()}`],
+        config: {
+          Bootstrap: [],
+          Discovery: {
+            MDNS: {
+              Enabled: false
+            },
+            webRTCStar: {
+              Enabled: false
+            }
+          }
+        }
       }, callback)
     }
 
@@ -283,7 +293,17 @@ describe('name', function () {
       df.spawn({
         exec: IPFS,
         args: [`--pass ${hat()}`],
-        config: { Bootstrap: [] }
+        config: {
+          Bootstrap: [],
+          Discovery: {
+            MDNS: {
+              Enabled: false
+            },
+            webRTCStar: {
+              Enabled: false
+            }
+          }
+        }
       }, (err, _ipfsd) => {
         expect(err).to.not.exist()
         ipfsd = _ipfsd
@@ -453,8 +473,18 @@ describe('name', function () {
       this.timeout(40 * 1000)
       df.spawn({
         exec: IPFS,
-        args: [`--pass ${hat()}`],
-        config: { Bootstrap: [] }
+        args: [`--pass ${hat()}`, '--local'],
+        config: {
+          Bootstrap: [],
+          Discovery: {
+            MDNS: {
+              Enabled: false
+            },
+            webRTCStar: {
+              Enabled: false
+            }
+          }
+        }
       }, (err, _ipfsd) => {
         expect(err).to.not.exist()
         node = _ipfsd.api
